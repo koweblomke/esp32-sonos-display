@@ -15,6 +15,7 @@ const char* password = WIFI_PASSWORD; // coming from WiFiCreds
 
 const char* sonosIP = "192.168.1.212";  // Replace with your Sonos speaker IP
 const uint16_t sonosPort = 1400;
+const uint16_t serverPort = 8080;
 
 unsigned long lastResubscribe = 0;
 const unsigned long RESUBSCRIBE_INTERVAL = 55 * 60 * 1000UL; // 55 minutes
@@ -29,7 +30,7 @@ char stack[1024];
 char request[MAX_REQUEST_SIZE];
 int request_index = 0;
 
-WiFiServer eventServer(8000); // HTTP server to receive NOTIFY events
+WiFiServer eventServer(serverPort); // HTTP server to receive NOTIFY events
 
 #define DISPLAY_TIMEOUT_MS 10000  // e.g. 10 seconds
 
@@ -59,7 +60,7 @@ void subscribeToSonos() {
     return;
   }
 
-  String callbackURL = "http://" + WiFi.localIP().toString() + ":8000/";
+  String callbackURL = "http://" + WiFi.localIP().toString() + ":" + serverPort + "/";
   String request =
     "SUBSCRIBE /MediaRenderer/RenderingControl/Event HTTP/1.1\r\n" +
     String("HOST: ") + sonosIP + ":" + sonosPort + "\r\n" +
@@ -229,7 +230,8 @@ void setup()
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-
+  WiFi.setSleep(false);
+  
   Serial.println("Connecting to WiFi...");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
