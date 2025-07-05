@@ -9,6 +9,8 @@ A minimalist ESP32-C6 project that displays information like the current volume 
 
 I've created this because I missed some visual feedback from my Sonos sound system. This setup allows to receive visual information from your Sonos speakers. It currently only shows volume information but you can now extend this any way you like.
 
+[![Watch the demo](https://img.youtube.com/vi/f8YSVrWjm1I/0.jpg)](https://www.youtube.com/watch?v=f8YSVrWjm1I)
+
 ---
 
 ## ✨ Features
